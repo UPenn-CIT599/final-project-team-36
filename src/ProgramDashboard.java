@@ -32,7 +32,7 @@ public class ProgramDashboard {
         Scanner userOption = new Scanner(System.in);
         int exitProgram = 0;
         String stock = "S&P 500";
-        while (exitProgram == 0) {
+        for(int i = 0; i < 1000; i++) {
             System.out.println();
             summary.displayStockView(stock);
             System.out.println("Please enter the option on how you would like to proceed:");
@@ -42,9 +42,9 @@ public class ProgramDashboard {
                 System.out.println("3: View the price predictor for S&P 500");
             }
             System.out.println("X: Exit the program");
-            String choice1 = userOption.next();
+            String choice1 = userOption.nextLine();
             checkExit(choice1);
-            userOption.nextLine();
+            //String yep = userOption.nextLine();
 
             /*
              * while (!userOption.hasNextInt()) {
@@ -53,6 +53,9 @@ public class ProgramDashboard {
              */
             if (choice1.equals("1")) {
                 // Scanner stockPick = new Scanner(System.in);
+                for(int j = 0; j <1000; j++) {
+                    
+                
                 System.out.println("Which Stock would you like to view?");
                 // call display method for the list of available stocks
                 // displayStockList();
@@ -65,45 +68,51 @@ public class ProgramDashboard {
                 System.out.println("4: General Electric (GE)");
                 System.out.println("5: Back to S&P500");
                 System.out.println("X: Exit Program");
-                String choice2 = userOption.next();
+                String choice2 = userOption.nextLine();
                 checkExit(choice2);
                 // checkInt(choice2);
                 // choice2.toUpperCase()
                 if (choice2.equals("1")) {
-                    // displayStockView("Apple");
+                    
                     System.out.println("Apple Stock View");
                     stock = "Apple";
+                    summary.displayStockView(stock);
+                    
 
                 } else if (choice2.equals("2")) {
-                    // displayStockView("Google");
+                    summary.displayStockView("Google");
                     System.out.println("Google Stock View");
                     stock = "Google";
 
                 } else if (choice2.equals("3")) {
-                    // displayStockView("Microsoft");
+                    summary.displayStockView("Microsoft");
                     System.out.println("Microsoft Stock View");
                     stock = "Microsoft";
                 } else if (choice2.equals("4")) {
-                    // displayStockView("GE");
+                    summary.displayStockView("GE");
                     System.out.println("GE Stock View");
                     stock = "General Electric";
                 } else if (choice2.equals("5")) {
-                    // displayStockView("S&P500");
+                    // 
                     System.out.println("Return to summary");
                     stock = "S&P 500";
+                    //summary.displayStockView(stock);
+                    choice1 = "0";
+                    break;
                 } else {
                     System.out.println("Invalid response - please try again");
                     choice2 = userOption.next();
                 }
-
-            } else if (choice1.equals("X") || choice1.equals("x")) {
+                }}
+             else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
                 return;
             } else {
                 System.out.println("Invalid response - please try again");
             }
-
-        }
+            
+        
+                }
         userOption.close();
     }
 
