@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 /**
  * Represents the Stock Market program. This class will display the initial
  * summary and options to the user and will call other methods to navigate user
@@ -11,6 +14,7 @@ import java.util.Scanner;
 public class ProgramDashboard {
 
     StockView summary = new StockView();
+    StockLineChart chart = new StockLineChart();
 
     /**
      * Constructs a new StockMarket Program - sets up the summary values and
@@ -21,6 +25,14 @@ public class ProgramDashboard {
 
         System.out.println("Welcome to Team 36 Stock Market Program");
         System.out.println("");
+        System.out.println(
+                "We have many excellent features in this program that we hope that you will enjoy, including:");
+        System.out
+                .println("    -Connection to the YahooFinance API so you enjoy the most up to date price information");
+        System.out.println("    -A machine learning price prediction algorithm for the S&P500");
+        System.out.println("    -Default price performance summary information");
+        System.out.println("    -Stock 90 day performance line chart");
+        System.out.println("");
 
     }
 
@@ -30,89 +42,79 @@ public class ProgramDashboard {
      */
     void launchProgram() {
         Scanner userOption = new Scanner(System.in);
-        int exitProgram = 0;
         String stock = "S&P 500";
-        for(int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             System.out.println();
             summary.displayStockView(stock);
-            System.out.println("Please enter the option on how you would like to proceed:");
-            System.out.println("1: Navigate to individual stock view");
-            System.out.println("2: Calculate performance of S&P 500 based on entered dates");
-            if (stock.equals("S&P 500")) {
-                System.out.println("3: View the price predictor for S&P 500");
-            }
-            System.out.println("X: Exit the program");
+            summary.displayUserActions(stock);
             String choice1 = userOption.nextLine();
             checkExit(choice1);
-            //String yep = userOption.nextLine();
+            int whichOption = 0;
 
-            /*
-             * while (!userOption.hasNextInt()) {
-             * System.out.println("Input is not a number, try again");
-             * userOption.nextLine(); }
-             */
             if (choice1.equals("1")) {
                 // Scanner stockPick = new Scanner(System.in);
-                for(int j = 0; j <1000; j++) {
-                    
-                
-                System.out.println("Which Stock would you like to view?");
-                // call display method for the list of available stocks
-                // displayStockList();
-                /*
-                 * Hard-coding options but this will display the stocks that are in the dataset
-                 */
-                System.out.println("1: Apple (APPL)");
-                System.out.println("2: Google (GOOGL)");
-                System.out.println("3: Microsoft (M)");
-                System.out.println("4: General Electric (GE)");
-                System.out.println("5: Back to S&P500");
-                System.out.println("X: Exit Program");
-                String choice2 = userOption.nextLine();
-                checkExit(choice2);
-                // checkInt(choice2);
-                // choice2.toUpperCase()
-                if (choice2.equals("1")) {
-                    
-                    System.out.println("Apple Stock View");
-                    stock = "Apple";
-                    summary.displayStockView(stock);
-                    
+                for (int j = 0; j < 1; j++) {
 
-                } else if (choice2.equals("2")) {
-                    summary.displayStockView("Google");
-                    System.out.println("Google Stock View");
-                    stock = "Google";
+                    System.out.println("Which Stock would you like to view?");
+                    // call display method for the list of available stocks
+                    // displayStockList();
+                    /*
+                     * Hard-coding options but this will display the stocks that are in the dataset
+                     */
+                    if (whichOption == 0) {
+                        summary.displayStockChoices();
+                        whichOption++;
+                    } else {
+                        summary.displayUserActions(stock);
+                    }
 
-                } else if (choice2.equals("3")) {
-                    summary.displayStockView("Microsoft");
-                    System.out.println("Microsoft Stock View");
-                    stock = "Microsoft";
-                } else if (choice2.equals("4")) {
-                    summary.displayStockView("GE");
-                    System.out.println("GE Stock View");
-                    stock = "General Electric";
-                } else if (choice2.equals("5")) {
-                    // 
-                    System.out.println("Return to summary");
-                    stock = "S&P 500";
-                    //summary.displayStockView(stock);
-                    choice1 = "0";
-                    break;
-                } else {
-                    System.out.println("Invalid response - please try again");
-                    choice2 = userOption.next();
+                    String choice2 = userOption.nextLine();
+                    checkExit(choice2);
+                    // checkInt(choice2);
+                    // choice2.toUpperCase()
+                    if (choice2.equals("1")) {
+                        System.out.println("Apple Stock View");
+                        stock = "APPL";
+                    } else if (choice2.equals("2")) {
+                        summary.displayStockView("Google");
+                        System.out.println("Google Stock View");
+                        stock = "Google";
+
+                    } else if (choice2.equals("3")) {
+                        summary.displayStockView("Microsoft");
+                        System.out.println("Microsoft Stock View");
+                        stock = "Microsoft";
+                    } else if (choice2.equals("4")) {
+                        for (int l = 0; l < 1; l++) {
+                            System.out.println("Please enter the stock symbol you wish to view");
+                            System.out.println("Example - Type 'GE' to view General Electric");
+                            String choice3 = userOption.nextLine();
+                            checkExit(choice3);
+                            stock = choice3;
+                        }
+
+                    } else if (choice2.equals("5")) {
+                        //
+                        System.out.println("Return to summary");
+                        stock = "S&P 500";
+                    } else {
+                        System.out.println("Invalid response - please try again");
+                        choice2 = userOption.next();
+                    }
                 }
-                }}
-             else if (choice1.equals("X") || choice1.equals("x")) {
+            } else if (choice1.equals("3")) {
+                StockLineChart graphic = new StockLineChart("S&P500");
+                Application.launch(StockLineChart.class, args);
+                
+            } else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
+                userOption.close();
                 return;
             } else {
                 System.out.println("Invalid response - please try again");
             }
-            
-        
-                }
+
+        }
         userOption.close();
     }
 
