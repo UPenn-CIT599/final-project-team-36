@@ -1,19 +1,12 @@
 
-import com.workday.insights.timeseries.arima.Arima;
-import com.workday.insights.timeseries.arima.struct.ArimaParams;
-import com.workday.insights.timeseries.arima.struct.ForecastResult;
 
+import com.workday.insights.timeseries.arima.*;
+import com.workday.insights.timeseries.arima.struct.*;
 import java.util.ArrayList;
 
 public class ArimaForecaster {
-    /**
-     * Prepare input timeseries data.
-     */
+    
     private double[] dataArray;
-
-    /**
-     * Set ARIMA model parameters.
-     */
     private int p;
     private int d;
     private int q;
@@ -22,7 +15,11 @@ public class ArimaForecaster {
     private int Q;
     private int m;
     private int forecastSize;
-
+    
+    /**
+     * Prepare input timeseries data.
+     * Set ARIMA model parameters.
+     */
     public ArimaForecaster(double[] dataArray, int p, int d, int q, int forecastSize){
         this.dataArray = dataArray;
         this.p = p;
@@ -35,42 +32,24 @@ public class ArimaForecaster {
         this.m = 0;
     }
 
-    public ArrayList<double[]> forcast(){
-        /**
-         * Obtain forecast result. The structure contains forecasted values and performance metric etc.
-         */
+    /**
+     * Obtain forecast result. The structure contains forecasted values and performance metric etc.
+     * Read forecast values, We can obtain upper- and lower-bounds of confidence intervals on forecast values. By default, it computes at 95%-confidence level.
+     * The root mean-square error and the maximum normalized variance of the forecast values and their confidence interval are provided.
+     * The output information are build with StringBuilder
+     */
+    public ArrayList<double[]> forecast(){
+
         ArimaParams params = new ArimaParams(p, d, q, P, D, Q, m);
 
         ForecastResult forecastResult = Arima.forecast_arima(dataArray, forecastSize, params);
-        /**
-         * Read forecast values
-         */
-        double[] forecastData = forecastResult.getForecast(); // in this example, it will return { 2 }
 
-        /**
-         * You can obtain upper- and lower-bounds of confidence intervals on forecast values.
-         * By default, it computes at 95%-confidence level. This value can be adjusted in ForecastUtil.java
-         */
+        double[] forecastData = forecastResult.getForecast();
         double[] uppers = forecastResult.getForecastUpperConf();
         double[] lowers = forecastResult.getForecastLowerConf();
-
-        /**
-         * You can also obtain the root mean-square error as validation metric.
-         */
         double rmse = forecastResult.getRMSE();
-
-        /**
-         * It also provides the maximum normalized variance of the forecast values and their confidence interval.
-         */
         double maxNormalizedVariance = forecastResult.getMaxNormalizedVariance();
-
-        /**
-         * Finally you can read log messages.
-         */
-        String log = forecastResult.getLog();
-        /**
-         * build the output information with StringBuilder
-         */
+        //String log = forecastResult.getLog();
 
         ArrayList<double[]> result = new ArrayList<>();
         result.add(forecastData);
@@ -78,7 +57,6 @@ public class ArimaForecaster {
         result.add(lowers);
         result.add(new double[]{rmse});
         result.add(new double[]{maxNormalizedVariance});
-
         return result;
     }
 }

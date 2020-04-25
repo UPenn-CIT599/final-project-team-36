@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class DataReader {
     private String filename;
-    private ArrayList<ClosePriceDailyData> prices;
+    private ArrayList<HistoricalDailyPriceData> prices;
 
     public DataReader(String filename) {
         this.filename = filename;
@@ -17,7 +17,7 @@ public class DataReader {
      * Read the data from csv file, and store the data in ArrayList.
      * @return
      */
-    public ArrayList<ClosePriceDailyData> read(){
+    public ArrayList<HistoricalDailyPriceData> read(){
         File f = new File(filename);
         try {
             Scanner scan = new Scanner(f);
@@ -29,9 +29,9 @@ public class DataReader {
                 int year = Integer.parseInt(date[0]);
                 int month = Integer.parseInt(date[1]);
                 int day = Integer.parseInt(date[2]);
-                double closePrice = Double.parseDouble(lineElement[3]);
+                double closePrice = Double.parseDouble(lineElement[4]);
 
-                ClosePriceDailyData price = new ClosePriceDailyData(year, month, day, closePrice);
+                HistoricalDailyPriceData price = new HistoricalDailyPriceData(year, month, day, closePrice);
                 prices.add(price);
             }
             scan.close();
@@ -40,4 +40,9 @@ public class DataReader {
         }
         return prices;
     }
+
+	public ArrayList<HistoricalDailyPriceData> getPrices() {
+		return prices;
+	}
+    
 }

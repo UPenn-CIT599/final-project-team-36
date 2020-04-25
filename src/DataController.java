@@ -3,8 +3,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DataController {
-    private ArrayList<ClosePriceDailyData> dailyPrices;
-
+	
+    
+    private int p;
+    private int d;
+    private int q;
+    private int forecastSize;
+    private ArrayList<HistoricalDailyPriceData> historicalDailyPrices;
     private double[] priceData;
 
     /**
@@ -13,30 +18,37 @@ public class DataController {
      * dailyPrices is used to store the data read from csv, which contains the close prices and the date.
      * Array priceData is used to store the close prices of the stock, which will be used in the prediction.
      */
-    public DataController(String filename){
-        DataReader dr = new DataReader(filename);
-        dailyPrices = dr.read();
-        priceData = new double[dailyPrices.size()];
-        for(int i = 0; i < dailyPrices.size(); i ++){
-            priceData[i] = dailyPrices.get(i).getClosePrice();
-            //System.out.println(priceData[i]);
+    public DataController(){
+		p = 1;
+		d = 0;
+		q = 1;
+		forecastSize = 7;
+        DataReader dr = new DataReader("src/GSPC.csv");
+        historicalDailyPrices = dr.read();
+        priceData = new double[historicalDailyPrices.size()];
+        for(int i = 0; i < historicalDailyPrices.size(); i ++){
+            priceData[i] = historicalDailyPrices.get(i).getClosePrice();
         }
+        
     }
-	/**
-	 * run the forecast, then store the return result in StringBuilder, then convert to String for display;
-	 * may use Array / ArrayList in the future work.
-	 * @param data
-	 * @param p
-	 * @param d
-	 * @param q
-	 * @param forecastSize
-	 * @return
-	 */
-    public String forecastControl(double[] data, int p, int d, int q, int forecastSize){
-        ArimaForecaster af = new ArimaForecaster(data, p, d, q, forecastSize);
-        ArrayList<double[]> forecastResult = af.forcast();
+    
+    public ArrayList<double[]> forecast(){
+        ArimaForecaster af = new ArimaForecaster(priceData, p, d, q, forecastSize);
+        ArrayList<double[]> forecastResult = af.forecast();
+        return forecastResult;
+    }
+    
+    public ArrayList<double[]> forecastTest(){
+    	double[] testData = Arrays.copyOfRange(priceData, 0, priceData.length - forecastSize);
+        ArimaForecaster af = new ArimaForecaster(testData, p, d, q, forecastSize);
+        ArrayList<double[]> forecastResult = af.forecast();
+        return forecastResult;
+    }
+
+    public String forecastPrintInformation(){
+        ArrayList<double[]> forecastResult = forecast();
         StringBuilder sb = new StringBuilder();
-        sb.append("The predicted data is: ");
+        sb.append("The predicted stock price for the next 30 days are: ");
         sb.append(Arrays.toString(forecastResult.get(0)) + ".\n");
         sb.append("The root mean-square error is: ");
         sb.append(Arrays.toString(forecastResult.get(3)) + ".\n");
@@ -44,13 +56,17 @@ public class DataController {
         sb.append(Arrays.toString(forecastResult.get(4)) + ".");
         return sb.toString();
     }
-
-    public ArrayList<ClosePriceDailyData> getDailyPrices() {
-        return dailyPrices;
+    
+    public double[] forecastClosePrice(){
+        double[] closePrice = forecast().get(0);
+        return closePrice;
     }
-
-    public double[] getPriceData() {
-        return priceData;
+    
+    public double[] forecastTestPrice() {
+    	return forecastTest().get(0);
     }
-
+    
+    public double[] gethistoricalClosePrice(){
+    	return priceData;
+    }
 }
