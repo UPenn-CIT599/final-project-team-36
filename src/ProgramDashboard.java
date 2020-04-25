@@ -104,7 +104,7 @@ public class ProgramDashboard {
                 }
             } else if (choice1.equals("3")) {
                 StockLineChart graphic = new StockLineChart("S&P500");
-                Application.launch(StockLineChart.class, args);
+                Application.launch(StockLineChart.class, stock);
                 
             } else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");

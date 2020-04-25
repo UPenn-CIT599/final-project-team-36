@@ -6,10 +6,6 @@ public class StockDataAnalysis {
 
     }
 
-    LocalDate date = LocalDate.now();
-    LocalDate ninetyDate = date.minusDays(90);
-    LocalDate oneEightyDate = date.minusDays(180);
-    LocalDate oneYearDate = date.minusDays(365);
 
     /**
      * This method calculates the performance of the stock using the current price

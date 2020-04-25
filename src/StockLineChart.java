@@ -26,6 +26,8 @@ public class StockLineChart extends Application {
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Date");
         yAxis.setLabel("Price");
+        YahooController stockCheck = new YahooController();
+        System.out.println(stockCheck.historicalStockDayWise("APPL", 1));
         
         final LineChart<Number,Number> lineChart = 
                 new LineChart<Number,Number>(xAxis, yAxis);
