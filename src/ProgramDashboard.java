@@ -42,10 +42,17 @@ public class ProgramDashboard {
      */
     void launchProgram() {
         Scanner userOption = new Scanner(System.in);
-        String stock = "S&P 500";
+        YahooController controller = new YahooController();
+        String stock = "^GSPC";
         for (int i = 0; i < 1000; i++) {
             System.out.println();
-            summary.displayStockView(stock);
+            try{
+                summary.displayStockView(stock);
+            }
+            catch(Exception e){
+                System.out.println("Stock is not valid, please enter new stock symbol");
+                stock = userOption.nextLine().toUpperCase();
+            }
             summary.displayUserActions(stock);
             String choice1 = userOption.nextLine();
             checkExit(choice1);
@@ -78,17 +85,17 @@ public class ProgramDashboard {
                     } else if (choice2.equals("2")) {
                         summary.displayStockView("Google");
                         System.out.println("Google Stock View");
-                        stock = "Google";
+                        stock = "GOOGL";
 
                     } else if (choice2.equals("3")) {
                         summary.displayStockView("Microsoft");
                         System.out.println("Microsoft Stock View");
-                        stock = "Microsoft";
+                        stock = "M";
                     } else if (choice2.equals("4")) {
                         for (int l = 0; l < 1; l++) {
                             System.out.println("Please enter the stock symbol you wish to view");
                             System.out.println("Example - Type 'GE' to view General Electric");
-                            String choice3 = userOption.nextLine();
+                            String choice3 = userOption.nextLine().toUpperCase();
                             checkExit(choice3);
                             stock = choice3;
                         }
@@ -102,11 +109,17 @@ public class ProgramDashboard {
                         choice2 = userOption.next();
                     }
                 }
-            } else if (choice1.equals("3")) {
-                StockLineChart graphic = new StockLineChart("S&P500");
+            } else if (choice1.equals("2")) {
+                StockLineChart graphic = new StockLineChart(stock);
                 Application.launch(StockLineChart.class, stock);
                 
-            } else if (choice1.equals("X") || choice1.equals("x")) {
+            }else if (choice1.equals("3")) {
+                controller.fetchRealTimeData(stock);
+            } else if (choice1.equals("4")) {
+                PredictorRunner pr = new PredictorRunner();
+                pr.printInformation();
+                
+            }else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
                 userOption.close();
                 return;
@@ -118,6 +131,8 @@ public class ProgramDashboard {
         userOption.close();
     }
 
+    
+    
     /**
      * This method checks whether user entered an integer
      * 

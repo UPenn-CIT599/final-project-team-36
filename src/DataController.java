@@ -23,7 +23,7 @@ public class DataController {
 		d = 0;
 		q = 1;
 		forecastSize = 7;
-        DataReader dr = new DataReader("src/GSPC.csv");
+        DataReader dr = new DataReader("GSPC.csv");
         historicalDailyPrices = dr.read();
         priceData = new double[historicalDailyPrices.size()];
         for(int i = 0; i < historicalDailyPrices.size(); i ++){

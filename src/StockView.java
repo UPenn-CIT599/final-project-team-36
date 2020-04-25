@@ -1,9 +1,25 @@
 import java.text.DecimalFormat;
+import java.util.List;
+
+import yahoofinance.Stock;
 
 public class StockView {
 
-    public StockView() {
+    public String stock = null;
+    
+    public StockView(String stock) {
+        this.stock = stock;
+    }
 
+    double testnumber = 27.8;
+    
+    
+
+    public double getTestnumber(int index) {
+        YahooController controller = new YahooController();
+        List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(stock, 90);
+        testnumber = Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString());
+        return testnumber;
     }
 
     private static DecimalFormat rounded = new DecimalFormat("0.00");
@@ -16,17 +32,34 @@ public class StockView {
      */
     public void displayStockView(String whichStock) {
         System.out.println("Current Stock: " + whichStock);
+        double currentPrice = 0;
+        double ninetyDayPrice = 1000;
+        double oneEightyPrice = 0;
+        double threeSixtyFivePrice = 0;
         StockDataAnalysis analysis = new StockDataAnalysis();
-        double currentPrice = 30.2;// getStockData(whichStock, 0); //method to be replaced by Anna method for data
-                                   // return
-        double ninetyDayPrice = 35.1;// getStockData(whichStock, 90); //method to be replaced by Anna method for data
-                                     // return
-        double oneEightyPrice = 22;// getStockData(whichStock, 180); //method to be replaced by Anna method for
-                                   // data return
-        double threeSixtyFivePrice = 5.99;// getStockData(whichStock, 365); //method to be replaced by Anna method for
-                                          // data return
+        YahooController controller = new YahooController();
+        List<Stock> listOfRealTimeData = controller.fetchRealTimeData(whichStock);
+        for(Stock stock : listOfRealTimeData) {
+            System.out.println(stock.getQuote().toString());
+            currentPrice = stock.getQuote().getPreviousClose().doubleValue();
+            //ninetyDayPrice = Double.parseDouble(controller.historicalStockDayWise(whichStock, 90).toString());
+        }
+       
+        List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(whichStock, 90);
+        ninetyDayPrice = Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString());
+        
+        List<ManageRecordTransactionBean> listOfHistoricalDataDaywise1 = controller.historicalStockDayWise(whichStock, 180);
+        oneEightyPrice = Double.parseDouble(listOfHistoricalDataDaywise1.get(0).getClose().toString());
+        /*for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalDataDaywise1) {
+            oneEightyPrice = Double.parseDouble(manageRecordTransactionBean.getClose().toString());
+        }
+        */
+        List<ManageRecordTransactionBean> listOfHistoricalData = controller.historicalStock(whichStock,1);
+        threeSixtyFivePrice = Double.parseDouble(listOfHistoricalData.get(0).getClose().toString());
+        
+        
 
-        System.out.println("Current Price: " + currentPrice); // displayCurrentPrice(whichStock)); this method will need
+        System.out.println("Last Close Price: " + currentPrice); // displayCurrentPrice(whichStock)); this method will need
                                                               // to be added with data class
         System.out.println(
                 "--------------------------------------------------------------------------------------------------");

@@ -1,5 +1,3 @@
-package org.fin;
-
 import java.util.List;
 
 import yahoofinance.Stock;

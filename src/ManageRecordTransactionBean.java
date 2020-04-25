@@ -1,6 +1,3 @@
-package org.fin;
-
-
 public class ManageRecordTransactionBean {
 	 private String stockName; 
 	 private String date;

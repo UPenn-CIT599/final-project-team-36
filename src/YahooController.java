@@ -1,5 +1,3 @@
-package org.fin;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,8 +34,7 @@ public List<ManageRecordTransactionBean>  historicalStock(String stockName,int l
 	Calendar to = Calendar.getInstance();
 	from.add(Calendar.YEAR, -lastYear); // from lastYear year ago
 	Stock stock = YahooFinance.get(stockName);
-	List<HistoricalQuote> HistQuotes = stock.getHistordouble oneEightyPrice = 22;// getStockData(whichStock, 180); //method to be replaced by Anna method for
-    // data returny(from,to);
+	List<HistoricalQuote> HistQuotes = stock.getHistory(); // this line was messed up?
 	ManageRecordTransactionBean bean=new ManageRecordTransactionBean();
 	for (HistoricalQuote historicalQuote : HistQuotes) {
 		 bean=new ManageRecordTransactionBean();
