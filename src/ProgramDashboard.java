@@ -9,7 +9,6 @@ import yahoofinance.Stock;
  * through program
  * 
  * @author chase
- *
  */
 public class ProgramDashboard {
 
@@ -18,6 +17,7 @@ public class ProgramDashboard {
 
     public String stock = "^GSPC";
     StockLineChart chart = new StockLineChart(stock);
+
     /**
      * Constructs a new StockMarket Program - sets up the summary values and
      * displays the summary view to the user with the program options
@@ -44,15 +44,14 @@ public class ProgramDashboard {
     public void launchProgram() {
         Scanner userOption = new Scanner(System.in);
         YahooController controller = new YahooController();
-        
+
         String stock = "^GSPC";
-        
+
         for (int i = 0; i < 1000; i++) {
             System.out.println();
-            try{
+            try {
                 summary.displayStockView(stock);
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Stock is not valid, please enter new stock symbol");
                 stock = userOption.nextLine().toUpperCase();
                 continue;
@@ -76,7 +75,7 @@ public class ProgramDashboard {
                         summary.displayStockChoices();
                         whichOption++;
                     } else {
-                        summary.displayUserActions(stock,chartOpened);
+                        summary.displayUserActions(stock, chartOpened);
                     }
 
                     String choice2 = userOption.nextLine();
@@ -114,50 +113,52 @@ public class ProgramDashboard {
                     }
                 }
             } else if (choice1.equals("2")) {
-                //System.out.println("Exit the chart to continue");
-                //StockChartData scd = new StockChartData(stock);
-                //scd.setPriceData(stock);
                 StockLineChart slc = new StockLineChart(stock);
                 slc.display();
                 chartOpened = 1;
                 System.out.println("NOTE: If you exit the chart the program will terminate");
-                //userOption.close();
-                //System.exit(0);
-            }else if (choice1.equals("3")) {
+            } else if (choice1.equals("3")) {
                 String symbol = stock;
                 System.out.println("#####################TRY TO GET REAL TIME DATA BY SINGLE SYMBOL############");
-                
+
                 List<Stock> listOfRealTimeData = controller.fetchRealTimeData(symbol);
                 for (Stock stock1 : listOfRealTimeData) {
-                    //System.out.println(symbol +" - "+stock.getQuote().toString());
-                    System.out.println(symbol +" Close - "+stock1.getQuote().getPreviousClose());
+                    // System.out.println(symbol +" - "+stock.getQuote().toString());
+                    System.out.println(symbol + " Close - " + stock1.getQuote().getPreviousClose());
                 }
                 System.out.println("#####################TRY TO GET HISTORCAL DATA  YEAR WISE############");
-                int fromLastYear=5; 
-                 
-                List<ManageRecordTransactionBean> listOfHistoricalData=controller.historicalStock(symbol,fromLastYear);
-                System.out.println("STOCK      DATE        LOW           HIGH         OPEN         CLOSE        ADJCLOSE"); 
+                int fromLastYear = 5;
+
+                List<ManageRecordTransactionBean> listOfHistoricalData = controller.historicalStock(symbol,
+                        fromLastYear);
+                System.out.println(
+                        "STOCK      DATE        LOW           HIGH         OPEN         CLOSE        ADJCLOSE");
                 for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalData) {
-                    System.out.println(manageRecordTransactionBean.getStockName()+"     "+manageRecordTransactionBean.getDate()+"   "+manageRecordTransactionBean.getLow()+"  "+manageRecordTransactionBean.getHigh()+"   "+manageRecordTransactionBean.getOpen()+"  "+manageRecordTransactionBean.getClose()+"  "+manageRecordTransactionBean.getAdjClose());
+                    System.out.println(manageRecordTransactionBean.getStockName() + "     "
+                            + manageRecordTransactionBean.getDate() + "   " + manageRecordTransactionBean.getLow()
+                            + "  " + manageRecordTransactionBean.getHigh() + "   "
+                            + manageRecordTransactionBean.getOpen() + "  " + manageRecordTransactionBean.getClose()
+                            + "  " + manageRecordTransactionBean.getAdjClose());
                 }
-                
+
                 System.out.println("#####################TRY TO GET HISTORCAL DATA  Day WISE############");
-                int fromLastdays=30;    
-                 
-                List<ManageRecordTransactionBean> listOfHistoricalDataDaywise=controller.historicalStockDayWise(symbol,fromLastdays);
-                System.out.println("STOCK       Date          CLOSE"); 
+                int fromLastdays = 30;
+
+                List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller
+                        .historicalStockDayWise(symbol, fromLastdays);
+                System.out.println("STOCK       Date          CLOSE");
                 for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalDataDaywise) {
-                    System.out.println(manageRecordTransactionBean.getStockName()+"     "+manageRecordTransactionBean.getDate()+"     "+manageRecordTransactionBean.getClose());
+                    System.out.println(manageRecordTransactionBean.getStockName() + "     "
+                            + manageRecordTransactionBean.getDate() + "     " + manageRecordTransactionBean.getClose());
                 }
-            
+
             } else if (choice1.equals("4")) {
                 PredictorRunner pr = new PredictorRunner(stock);
-                //System.out.println(pr.printInformation());
                 pr.lineChart();
                 chartOpened = 1;
-            }else if (choice1.equals("X") || choice1.equals("x")) {
+            } else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
-                //userOption.close();
+                userOption.close();
                 return;
             } else {
                 System.out.println("Invalid response - please try again");
@@ -167,9 +168,9 @@ public class ProgramDashboard {
         userOption.close();
     }
 
-    
     /**
      * Method to get the stock as a string
+     * 
      * @return
      */
     public String getStock() {
