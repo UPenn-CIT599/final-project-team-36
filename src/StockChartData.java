@@ -1,5 +1,9 @@
 import java.util.List;
 
+/**
+ * This class pulls the data to pass to the line chart
+ * class for the specified Stock
+ */
 public class StockChartData {
     private double[] priceData;
     int fromLastdays;

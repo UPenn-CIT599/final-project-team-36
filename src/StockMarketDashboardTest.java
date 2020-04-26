@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-class JunitTest {
+class StockMarketDashboardTest {
 
     /**
      * Tests the performance calculation method of our stock market program
