@@ -1,8 +1,6 @@
 import java.util.List;
 import java.util.Scanner;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 import yahoofinance.Stock;
 
 /**
@@ -16,9 +14,10 @@ import yahoofinance.Stock;
 public class ProgramDashboard {
 
     StockView summary = new StockView();
-    StockLineChart chart = new StockLineChart();
+    
 
     public String stock = "^GSPC";
+    StockLineChart chart = new StockLineChart(stock);
     /**
      * Constructs a new StockMarket Program - sets up the summary values and
      * displays the summary view to the user with the program options
@@ -33,7 +32,7 @@ public class ProgramDashboard {
                 .println("    -Connection to the YahooFinance API so you enjoy the most up to date price information");
         System.out.println("    -A machine learning price prediction algorithm for the S&P500");
         System.out.println("    -Default price performance summary information");
-        System.out.println("    -Stock 90 day performance line chart");
+        System.out.println("    -Stock 3 years performance line chart");
         System.out.println("");
 
     }
@@ -42,10 +41,11 @@ public class ProgramDashboard {
      * the launch program method starts the program and runs through the user
      * requested steps until the user decides to exit the program.
      */
-    void launchProgram() {
+    public void launchProgram() {
         Scanner userOption = new Scanner(System.in);
         YahooController controller = new YahooController();
         String stock = "^GSPC";
+        
         for (int i = 0; i < 1000; i++) {
             System.out.println();
             try{
@@ -114,13 +114,13 @@ public class ProgramDashboard {
                 }
             } else if (choice1.equals("2")) {
                 //System.out.println("Exit the chart to continue");
-                StockChartData scd = new StockChartData();
-                scd.setPriceData(stock);
-                StockLineChart slc = new StockLineChart();
+                //StockChartData scd = new StockChartData(stock);
+                //scd.setPriceData(stock);
+                StockLineChart slc = new StockLineChart(stock);
                 slc.display();
-                System.out.println("Thank you for using our program!");
-                userOption.close();
-                System.exit(0);
+                //System.out.println("Thank you for using our program!");
+                //userOption.close();
+                //System.exit(0);
             }else if (choice1.equals("3")) {
                 String symbol = stock;
                 System.out.println("#####################TRY TO GET REAL TIME DATA BY SINGLE SYMBOL############");
@@ -154,7 +154,7 @@ public class ProgramDashboard {
                 pr.lineChart();
             }else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
-                userOption.close();
+                //userOption.close();
                 return;
             } else {
                 System.out.println("Invalid response - please try again");

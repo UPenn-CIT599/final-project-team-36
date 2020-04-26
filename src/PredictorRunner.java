@@ -7,8 +7,8 @@ public class PredictorRunner {
 	private String symbol;
 
 	public PredictorRunner(String symbol) {
-		dc = new DataController();
-		dc.setPriceData(symbol);
+		this.symbol = symbol;
+		dc = new DataController(symbol);
 		forcastPrintInfomation = dc.forecastPrintInformation();
 	}
 	/**
@@ -19,15 +19,11 @@ public class PredictorRunner {
 	}
 	
 	public void lineChart() {
-		PredictLineChart plc = new PredictLineChart();
+		PredictLineChart plc = new PredictLineChart(symbol);
 		plc.show();
 	}
-	public String getSymbol() {
-		return symbol;
-	}
 
-	
-	
+
 	/**
 	 * two dataset we will use in the test: data1 is the Fibonacci Sequence, and we should get 233 for the next number;
      * data2 is the natural number with 1 increasing, and we should get 17 for the next number;

@@ -1,56 +1,94 @@
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
+import java.awt.BorderLayout;
+import java.util.Arrays;
 
-public class PredictLineChart extends Application {
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries.XYSeriesRenderStyle;
+import org.knowm.xchart.style.Styler.LegendPosition;
+
+
+public class PredictLineChart {
 	
-	@Override 
-	public void start(Stage stage) {
-        stage.setTitle("Stock Price Predictor");
-        //defining the axes
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Past and Future Days");
-        //creating the chart
-        final LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
-                
-        lineChart.setTitle("Stock Price Predictor");
-        //defining a series
-        XYChart.Series seriesH = new XYChart.Series();
-        seriesH.setName("Historical Stock Price (Last 30 Days)");
-        //populating the series with data
-        DataController dc = new DataController();
-        double[] historicalData = dc.gethistoricalClosePrice();
-        for(int i = -29; i<= 0; i++) {
-        	seriesH.getData().add(new XYChart.Data(i, historicalData[historicalData.length + i - 1]));
-        }
-        
-        XYChart.Series seriesT = new XYChart.Series();
-        seriesT.setName("Test Predict Stock Price (Last 7 Days)");
-        double[] testData = dc.forecastTestPrice();
-        for(int i = -6; i<= 0; i++) {
-        	seriesT.getData().add(new XYChart.Data(i, testData[i + 6]));
-        }
-        
-        XYChart.Series seriesP = new XYChart.Series();
-        seriesP.setName("Predicted Stock Price (Next 7 Days)");
-        double[] predictData = dc.forecastClosePrice();
-        for(int i = 1; i<= 7; i++) {
-        	seriesP.getData().add(new XYChart.Data(i, predictData[i-1]));
-        }
-        
-        Scene scene  = new Scene(lineChart,800,600);
-        lineChart.getData().addAll(seriesH, seriesT, seriesP);
-       
-        stage.setScene(scene);
-        stage.show();
-    }
-
-	public void show() {
-		launch();
+	private String symbol;
+	
+	public PredictLineChart(String symbol) {
+		this.symbol = symbol;
 	}
-	
+
+  public void show() {
+
+    // Create Chart
+    final XYChart chart =
+        new XYChartBuilder()
+            .width(1000)
+            .height(400)
+            .title("Predict Stock Price")
+            .xAxisTitle("Past and Future Days")
+            .yAxisTitle("Stock Close Price")
+            .build();
+
+    // Customize Chart
+    //chart.getStyler().setLegendPosition(LegendPosition.InsideNE);
+    //chart.getStyler().setDefaultSeriesRenderStyle(XYSeriesRenderStyle.Area);
+
+    // Series
+    
+    DataController dc = new DataController(symbol);
+    
+    double[] historicalData = dc.gethistoricalClosePrice();
+    double[] histDataY = Arrays.copyOfRange(historicalData, historicalData.length - 60, historicalData.length);
+    double[] histDataX = new double[histDataY.length];
+    
+    for(int i = -59; i<= 0; i++) {
+    	histDataX[59 + i] = i;
+    }
+    chart.addSeries("Price of Past 30 Days", histDataX, histDataY);
+    
+    double[] testDataY = dc.forecastTestPrice();
+    double[] testDataX = new double[testDataY.length];
+    for(int i = -6; i<= 0; i++) {
+    	testDataX[i + 6] = i;
+    }
+    chart.addSeries("Test Predict Price of Past 7 Days", testDataX, testDataY);
+    
+    double[] predictDataY = dc.forecastClosePrice();
+    double[] predictDataX = new double[predictDataY.length];
+    for(int i = 1; i<= 7; i++) {
+    	predictDataX[i - 1] = i;
+    }
+    chart.addSeries("Predict Price of the Future 7 Days", predictDataX, predictDataY);
+
+    // Schedule a job for the event-dispatching thread:
+    // creating and showing this application's GUI.
+    javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
+
+          @Override
+          public void run() {
+
+            // Create and set up the window.
+            JFrame frame = new JFrame("Predict Stock Price");
+            frame.setLayout(new BorderLayout());
+            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+            // chart
+            JPanel chartPanel = new XChartPanel<XYChart>(chart);
+            frame.add(chartPanel, BorderLayout.CENTER);
+
+            // label
+            JLabel label = new JLabel("ARIMA PREDICTOR", SwingConstants.CENTER);
+            frame.add(label, BorderLayout.SOUTH);
+
+            // Display the window.
+            frame.pack();
+            frame.setVisible(true);
+          }
+        });
+  }
 }

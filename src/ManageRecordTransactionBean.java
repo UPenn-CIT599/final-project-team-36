@@ -1,3 +1,4 @@
+
 public class ManageRecordTransactionBean {
 	 private String stockName; 
 	 private String date;
