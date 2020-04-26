@@ -31,12 +31,11 @@ public class PredictLineChart {
 	/**
 	 * Obtain data from DataController.
 	 * Create chart and data series.
-	 * historical data, test predict data and predict data are used in the lineChart.
+	 * Historical data, test predict data and predict data are displayed in the lineChart.
 	 * Schedule a job for the event-dispatching thread.
 	 * Creating and showing this application's GUI.
 	 */
 	public void show(){
-
 		final XYChart chart =
 				new XYChartBuilder()
 				.width(1000)
@@ -54,7 +53,7 @@ public class PredictLineChart {
 		for(int i = -59; i<= 0; i++) {
 			histDataX[59 + i] = i;
 		}
-		chart.addSeries("Price of Past 30 Days", histDataX, histDataY);
+		chart.addSeries("Price of Past 60 Days", histDataX, histDataY);
 		//test prediction stock price of the past 7 days.
 		double[] testDataY = dc.forecastTestPrice();
 		double[] testDataX = new double[testDataY.length];
@@ -68,7 +67,7 @@ public class PredictLineChart {
 		for(int i = 1; i<= 7; i++) {
 			predictDataX[i - 1] = i;
 		}
-		chart.addSeries("Predict Price of the Future 7 Days", predictDataX, predictDataY);
+		chart.addSeries("Predict Price of Next 7 Days", predictDataX, predictDataY);
 		//create and show the application's GUI
 		javax.swing.SwingUtilities.invokeLater(
 				new Runnable() {
@@ -82,7 +81,7 @@ public class PredictLineChart {
 						JPanel chartPanel = new XChartPanel<XYChart>(chart);
 						frame.add(chartPanel, BorderLayout.CENTER);
 						// label
-						JLabel label = new JLabel("ARIMA PREDICTOR", SwingConstants.CENTER);
+						JLabel label = new JLabel("", SwingConstants.CENTER);
 						frame.add(label, BorderLayout.SOUTH);
 						// Display the window.
 						frame.pack();
