@@ -18,13 +18,13 @@ public class ProgramDashboard {
     StockView summary = new StockView();
     StockLineChart chart = new StockLineChart();
 
+    public String stock = "^GSPC";
     /**
      * Constructs a new StockMarket Program - sets up the summary values and
      * displays the summary view to the user with the program options
      */
     public ProgramDashboard() {
         this.summary = new StockView();
-
         System.out.println("Welcome to Team 36 Stock Market Program");
         System.out.println("");
         System.out.println(
@@ -150,8 +150,8 @@ public class ProgramDashboard {
             
             } else if (choice1.equals("4")) {
                 PredictorRunner pr = new PredictorRunner(stock);
-                pr.printInformation();
-                
+                //System.out.println(pr.printInformation());
+                pr.lineChart();
             }else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
                 userOption.close();
@@ -166,6 +166,10 @@ public class ProgramDashboard {
 
     
     
+    public String getStock() {
+        return stock;
+    }
+
     /**
      * This method checks whether user entered an integer
      * 

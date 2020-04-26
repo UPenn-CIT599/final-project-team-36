@@ -101,7 +101,7 @@ public class StockView {
     public void displayUserActions(String whichStock) {
         System.out.println("Please enter the option on how you would like to proceed:");
         System.out.println("1: Choose an individual stock to view");
-        System.out.println("2: Show 90 day line chart & Exit the program");
+        System.out.println("2: Show Stock line chart & Exit the program");
         System.out.println("3: Print out stock price daily history");
         //if (whichStock.equals("S&P 500")) {
             System.out.println("4: View the price predictor for " + whichStock);
