@@ -1,7 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -83,12 +81,12 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayUserActions("AAPL", 0);
-      String expectedOutput = "Please enter the option on how you would like to proceed:\r\n" + 
-              "1: Choose an individual stock to view\r\n" + 
-              "2: Show Stock line chart\r\n" + 
-              "3: Print out stock price daily history\r\n" + 
-              "4: View the price predictor for AAPL\r\n" + 
-              "X: Exit the program\r\n" +
+      String expectedOutput = "Please enter the option on how you would like to proceed:\n" + 
+              "1: Choose an individual stock to view\n" + 
+              "2: Show Stock line chart\n" + 
+              "3: Print out stock price daily history\n" + 
+              "4: View the price predictor for AAPL\n" + 
+              "X: Exit the program\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -104,13 +102,13 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayUserActions("AAPL", 1); //this changes to 1 signifying chart has been launched
-      String expectedOutput = "Please enter the option on how you would like to proceed:\r\n" + 
-              "1: Choose an individual stock to view\r\n" + 
-              "2: Show Stock line chart\r\n" + 
-              "3: Print out stock price daily history\r\n" + 
-              "4: View the price predictor for AAPL\r\n" + 
-              "X: Exit the program\r\n" +
-              "NOTE: If you exit the chart the program will terminate\r\n" +
+      String expectedOutput = "Please enter the option on how you would like to proceed:\n" + 
+              "1: Choose an individual stock to view\n" + 
+              "2: Show Stock line chart\n" + 
+              "3: Print out stock price daily history\n" + 
+              "4: View the price predictor for AAPL\n" + 
+              "X: Exit the program\n" +
+              "NOTE: If you exit the chart the program will terminate\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -125,12 +123,12 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayStockChoices();
-      String expectedOutput = "1: Apple (AAPL)\r\n" + 
-              "2: Google (GOOGL)\r\n" + 
-              "3: Microsoft (MSFT)\r\n" + 
-              "4: I want to choose a stock (please use ticker symbol - example: GE)\r\n" + 
-              "5: Back to S&P500\r\n" + 
-              "X: Exit Program\r\n" +
+      String expectedOutput = "1: Apple (AAPL)\n" + 
+              "2: Google (GOOGL)\n" + 
+              "3: Microsoft (MSFT)\n" + 
+              "4: I want to choose a stock (please use ticker symbol - example: GE)\n" + 
+              "5: Back to S&P500\n" + 
+              "X: Exit Program\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -145,15 +143,74 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       ProgramDashboard PD = new ProgramDashboard();
-      String expectedOutput = "Welcome to Team 36 Stock Market Program\r\n" + 
-              "\r\n" + 
-              "We have many excellent features in this program that we hope that you will enjoy, including:\r\n" + 
-              "    -Connection to the YahooFinance API so you enjoy the most up to date price information\r\n" + 
-              "    -A machine learning price prediction algorithm for the selected stock\r\n" + 
-              "    -Default price performance summary information\r\n" + 
-              "    -Stock 3 years performance line chart\r\n" + 
-              "\r\n";
+      String expectedOutput = "Welcome to Team 36 Stock Market Program\n" + 
+              "\n" + 
+              "We have many excellent features in this program that we hope that you will enjoy, including:\n" + 
+              "    -Connection to the YahooFinance API so you enjoy the most up to date price information\n" + 
+              "    -A machine learning price prediction algorithm for the selected stock\n" + 
+              "    -Default price performance summary information\n" + 
+              "    -Stock 3 years performance line chart\n" + 
+              "\n";
       assertEquals(expectedOutput, outContent.toString());
+    }
+    
+    @Test
+    public void getFibonacciPrediction() {
+        double[] data = new double[]{0,1,1,2,3,5,8,13,21,34,55,89,144};
+        ArimaForecaster testResult = new ArimaForecaster(data, 4, 1, 3, 1);
+        assertEquals(233, testResult.forecast().get(0)[0], 0.1, "Prediction of Fibonacci Error!");
+    }
+    
+    @Test
+    public void getSquarePrediction() {
+        double[] data = new double[]{0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196};
+        ArimaForecaster testResult = new ArimaForecaster(data, 4, 1, 3, 1);
+        assertEquals(225, testResult.forecast().get(0)[0], 0.1,"Prediction of Square Sequence Erro!");
+    }
+    
+    @Test
+    public void getStockPredictionBoudary() {
+    	DataController dc = new DataController("^GSPC");
+    	double[] data = dc.gethistoricalClosePrice(); 
+    	ArimaForecaster forcastResult = new ArimaForecaster(data, 1, 0, 1, 1);
+    	assertTrue(forcastResult.forecast().get(0)[0] < forcastResult.forecast().get(1)[0], "Result Larger Than Upper Bound!");
+    	assertTrue(forcastResult.forecast().get(0)[0] > forcastResult.forecast().get(2)[0], "Result Lower Than Lower Bound.");
+    }
+    
+    
+    @Test
+    public void getLastDayPrice() {
+    	DataController dc = new DataController("^GSPC");
+    	double[] price = dc.gethistoricalClosePrice();
+    	double realTimePrice = 2836.74;
+    	assertEquals(realTimePrice, price[price.length-1], 1.0, "Close Price Collection Error; May Cause by Daily Stock Update.");
+    }
+    
+    @Test
+    public void getPriceDataSize() {
+    	DataController dc = new DataController("GOOGL");
+    	double[] price = dc.gethistoricalClosePrice();
+    	assertEquals(689, price.length, "Close Price Collection Error");
+    }
+    
+    @Test
+    public void getForecastSize() {
+    	DataController dc = new DataController("GOOGL");
+    	double[] price = dc.forecastClosePrice();
+    	assertEquals(7, price.length, "Predicted Close Price Collection Error");
+    	double[] forecastTest = dc.forecastClosePrice();
+    	assertEquals(7, forecastTest.length, "Predicted Close Price Collection Error");
+    }
+
+    @Test
+    public void getResultInformation() {
+    	DataController dc = new DataController("GOOGL");
+    	String str1 = "The predicted stock price for the next 7 days: ";
+    	String str2 = "The root mean-square error is: ";
+    	String str3 = "The maximum normalized variance is: ";
+    	assertEquals(str1, dc.forecastPrintInformation().get(0));
+    	assertEquals(str2, dc.forecastPrintInformation().get(2));
+    	assertEquals(str3, dc.forecastPrintInformation().get(4));
     }
     
 }

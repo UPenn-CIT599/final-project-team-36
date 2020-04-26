@@ -23,7 +23,11 @@ public class PredictorRunner {
 	 * @return
 	 */
 	public String printInformation() {
-		String forcastPrintInfomation = dc.forecastPrintInformation();
+		StringBuilder sb = new StringBuilder();
+		for(String str:dc.forecastPrintInformation()) {
+			sb.append(str);
+		}
+		String forcastPrintInfomation = sb.toString();
 		return forcastPrintInfomation;
 	}
 	

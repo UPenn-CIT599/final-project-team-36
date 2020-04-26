@@ -64,16 +64,16 @@ public class DataController {
      * Output String for the display at frontside.
      * @return
      */
-    public String forecastPrintInformation(){
+    public ArrayList<String> forecastPrintInformation(){
         ArrayList<double[]> forecastResult = forecast();
-        StringBuilder sb = new StringBuilder();
-        sb.append("The predicted stock price for the next 7 days: ");
-        sb.append(Arrays.toString(forecastResult.get(0)) + ".\n");
-        sb.append("The root mean-square error is: ");
-        sb.append(Arrays.toString(forecastResult.get(3)) + ".\n");
-        sb.append("The maximum normalized variance is: ");
-        sb.append(Arrays.toString(forecastResult.get(4)) + ".");
-        return sb.toString();
+        ArrayList<String> res = new ArrayList<>();
+        res.add("The predicted stock price for the next 7 days: ");
+        res.add(Arrays.toString(forecastResult.get(0)) + ".\n");
+        res.add("The root mean-square error is: ");
+        res.add(Arrays.toString(forecastResult.get(3)) + ".\n");
+        res.add("The maximum normalized variance is: ");
+        res.add(Arrays.toString(forecastResult.get(4)) + ".");
+        return res;
     }
     
     /**
