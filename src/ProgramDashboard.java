@@ -116,7 +116,6 @@ public class ProgramDashboard {
                 StockLineChart slc = new StockLineChart(stock);
                 slc.display();
                 chartOpened = 1;
-                System.out.println("NOTE: If you exit the chart the program will terminate");
             } else if (choice1.equals("3")) {
                 String symbol = stock;
                 System.out.println("#####################TRY TO GET REAL TIME DATA BY SINGLE SYMBOL############");
