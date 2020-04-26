@@ -11,6 +11,12 @@ import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 import yahoofinance.quotes.query1v7.StockQuotesQuery1V7Request;
 
+/**
+this class is to fetch rela time data from YahooFinance
+@author anna
+*/
+
+
 public class YahooController {
 	
 	public List<Stock> fetchRealTimeData(String symbol) {
@@ -25,7 +31,11 @@ public class YahooController {
 	}
 	
 	
-
+/**
+get stock name and calendar year
+*/
+	
+	
 public List<ManageRecordTransactionBean>  historicalStock(String stockName,int lastYear) {
 	
 	List<ManageRecordTransactionBean> list=new LinkedList<ManageRecordTransactionBean>();
@@ -77,6 +87,13 @@ public List<ManageRecordTransactionBean>  historicalStockDayWise(String stockNam
 		bean.setStockName(historicalQuote.getSymbol());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //		System.out.println("from days------------------------------------");
+		
+/** setup date format and get Low,High,Open,Close, AdjClose price
+		
+		
+*/
+		
+		
         String dateStr = dateFormat.format(historicalQuote.getDate().getTime());
 		bean.setDate(dateStr);
 		bean.setLow(historicalQuote.getLow().toString());
