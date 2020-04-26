@@ -24,7 +24,6 @@ public class ProgramDashboard {
      */
     public ProgramDashboard() {
         this.summary = new StockView();
-        this.chartOpened = chartOpened;
         System.out.println("Welcome to Team 36 Stock Market Program");
         System.out.println("");
         System.out.println(

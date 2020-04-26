@@ -1,4 +1,9 @@
-
+/**
+ * The Stock Market Runner class is used to launch the Stock Market program
+ * for Team 36
+ * @author chase
+ *
+ */
 public class StockMarketRunner {
 
     public StockMarketRunner() {
