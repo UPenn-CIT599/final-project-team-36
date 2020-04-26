@@ -44,7 +44,7 @@ public class PredictLineChart {
 				.xAxisTitle("Past and Future Days")
 				.yAxisTitle("Stock Close Price")
 				.build();
-		
+
 		DataController dc = new DataController(symbol);
 		//historical stock price of the past 60 days.
 		double[] historicalData = dc.gethistoricalClosePrice();
