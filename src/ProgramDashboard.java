@@ -106,7 +106,7 @@ public class ProgramDashboard {
                     } else if (choice2.equals("5")) {
                         //
                         System.out.println("Return to summary");
-                        stock = "S&P 500";
+                        stock = "^GSPC";
                     } else {
                         System.out.println("Invalid response - please try again");
                         choice2 = userOption.next();
