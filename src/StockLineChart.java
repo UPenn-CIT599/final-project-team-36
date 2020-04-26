@@ -1,7 +1,3 @@
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,16 +9,6 @@ import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 
 import java.awt.BorderLayout;
-import java.text.DecimalFormat;
-
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.stage.Stage;
-
-import yahoofinance.Stock;
 
 public class StockLineChart {
 

@@ -14,7 +14,7 @@ import yahoofinance.Stock;
 public class ProgramDashboard {
 
     StockView summary = new StockView();
-    
+    public int chartOpened = 0;
 
     public String stock = "^GSPC";
     StockLineChart chart = new StockLineChart(stock);
@@ -24,13 +24,14 @@ public class ProgramDashboard {
      */
     public ProgramDashboard() {
         this.summary = new StockView();
+        this.chartOpened = chartOpened;
         System.out.println("Welcome to Team 36 Stock Market Program");
         System.out.println("");
         System.out.println(
                 "We have many excellent features in this program that we hope that you will enjoy, including:");
         System.out
                 .println("    -Connection to the YahooFinance API so you enjoy the most up to date price information");
-        System.out.println("    -A machine learning price prediction algorithm for the S&P500");
+        System.out.println("    -A machine learning price prediction algorithm for the selected stock");
         System.out.println("    -Default price performance summary information");
         System.out.println("    -Stock 3 years performance line chart");
         System.out.println("");
@@ -44,6 +45,7 @@ public class ProgramDashboard {
     public void launchProgram() {
         Scanner userOption = new Scanner(System.in);
         YahooController controller = new YahooController();
+        
         String stock = "^GSPC";
         
         for (int i = 0; i < 1000; i++) {
@@ -56,7 +58,7 @@ public class ProgramDashboard {
                 stock = userOption.nextLine().toUpperCase();
                 continue;
             }
-            summary.displayUserActions(stock);
+            summary.displayUserActions(stock, chartOpened);
             String choice1 = userOption.nextLine();
             checkExit(choice1);
             int whichOption = 0;
@@ -75,7 +77,7 @@ public class ProgramDashboard {
                         summary.displayStockChoices();
                         whichOption++;
                     } else {
-                        summary.displayUserActions(stock);
+                        summary.displayUserActions(stock,chartOpened);
                     }
 
                     String choice2 = userOption.nextLine();
@@ -118,7 +120,8 @@ public class ProgramDashboard {
                 //scd.setPriceData(stock);
                 StockLineChart slc = new StockLineChart(stock);
                 slc.display();
-                //System.out.println("Thank you for using our program!");
+                chartOpened = 1;
+                System.out.println("NOTE: If you exit the chart the program will terminate");
                 //userOption.close();
                 //System.exit(0);
             }else if (choice1.equals("3")) {
@@ -152,6 +155,7 @@ public class ProgramDashboard {
                 PredictorRunner pr = new PredictorRunner(stock);
                 //System.out.println(pr.printInformation());
                 pr.lineChart();
+                chartOpened = 1;
             }else if (choice1.equals("X") || choice1.equals("x")) {
                 System.out.println("Thank you for using our program, have a great day!");
                 //userOption.close();
@@ -165,21 +169,14 @@ public class ProgramDashboard {
     }
 
     
-    
+    /**
+     * Method to get the stock as a string
+     * @return
+     */
     public String getStock() {
         return stock;
     }
 
-    /**
-     * This method checks whether user entered an integer
-     * 
-     * @param userInput
-     */
-    /*
-     * void checkInt(String userInput) { while (!userInput.par) {
-     * System.out.println("Input is not a number, try again"); userInput.nextLine();
-     * } }
-     */
     /**
      * This method will check if user enters exit command and exit the program
      * 
