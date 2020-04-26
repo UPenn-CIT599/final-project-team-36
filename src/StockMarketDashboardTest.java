@@ -116,8 +116,8 @@ class StockMarketDashboardTest {
     }
     
     /**
-     * Tests the options display method to ensure the correct options are
-     * printed out for the user
+     * Tests the program to check whether the open statements are printed out
+     * to display for the user
      */
     @Test
     void checkOpenStatement() {
