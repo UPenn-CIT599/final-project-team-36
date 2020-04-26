@@ -1,65 +1,57 @@
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Collect data, run the forecast, and store the data.
+ * @author Dongchao Xu
+ *
+ */
 public class DataController {
-	
-    
+
     private int p;
     private int d;
     private int q;
     private int forecastSize;
-    //private ArrayList<HistoricalDailyPriceData> historicalDailyPrices;
     private double[] priceData;
-    int fromLastdays;
+    private int fromLastdays;
 
 	/**
-     * read prices data from csv file, while we don't use it for the prediction for this time, which still need to tune the parameters.
-     * several double Array will be use for the forecast test.
-     * dailyPrices is used to store the data read from csv, which contains the close prices and the date.
-     * Array priceData is used to store the close prices of the stock, which will be used in the prediction.
-     */
+	 * Pass the symbol to YahooController to collect the stock information we want.
+	 * Model parameters are tuned here.
+	 * @param symbol
+	 */
     public DataController(String symbol){
 		p = 1;
 		d = 0;
 		q = 1;
 		forecastSize = 7;
-        //DataReader dr = new DataReader("src/GSPC.csv");
-//        historicalDailyPrices = dr.read();
-//        priceData = new double[historicalDailyPrices.size()];
-//        for(int i = 0; i < historicalDailyPrices.size(); i ++){
-//            priceData[i] = historicalDailyPrices.get(i).getClosePrice();
-//        }	
 		fromLastdays = 1000;
-		//String symbol="^GSPC";
 		YahooController controller=new YahooController();
     	List<ManageRecordTransactionBean> listOfHistoricalDataDaywise=controller.historicalStockDayWise(symbol,fromLastdays);
 		priceData = new double[listOfHistoricalDataDaywise.size()];
 		int i = 0;
 		for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalDataDaywise) {
-			//System.out.println(manageRecordTransactionBean.getClose());
 			priceData[i++] = Double.parseDouble(manageRecordTransactionBean.getClose());
 		}
     }
     
-//    public void setPriceData() {
-//    	YahooController controller=new YahooController();
-//    	List<ManageRecordTransactionBean> listOfHistoricalDataDaywise=controller.historicalStockDayWise(symbol,fromLastdays);
-//		priceData = new double[listOfHistoricalDataDaywise.size()];
-//		int i = 0;
-//		for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalDataDaywise) {
-//			//System.out.println(manageRecordTransactionBean.getClose());
-//			priceData[i++] = Double.parseDouble(manageRecordTransactionBean.getClose());
-//		}
-//    }
-    
+    /**
+     * Run the ArimaForecaster to predict the future stock price. 
+     * Store the result in forecastRsult.
+     * @return
+     */
     public ArrayList<double[]> forecast(){
         ArimaForecaster af = new ArimaForecaster(priceData, p, d, q, forecastSize);
         ArrayList<double[]> forecastResult = af.forecast();
         return forecastResult;
     }
     
+    /**
+     * Run the ArimaForecaster to predict test stock price (which is the historical price with the past (forecastSize) days.
+     * Store the result in forecastRsult.
+     * @return
+     */
     public ArrayList<double[]> forecastTest(){
     	double[] testData = Arrays.copyOfRange(priceData, 0, priceData.length - forecastSize);
         ArimaForecaster af = new ArimaForecaster(testData, p, d, q, forecastSize);
@@ -67,6 +59,11 @@ public class DataController {
         return forecastResult;
     }
 
+    /**
+     * Get the forecastResult and store in StringBuilder.
+     * Output String for the display at frontside.
+     * @return
+     */
     public String forecastPrintInformation(){
         ArrayList<double[]> forecastResult = forecast();
         StringBuilder sb = new StringBuilder();
@@ -79,15 +76,27 @@ public class DataController {
         return sb.toString();
     }
     
+    /**
+     * Get the predicted close price from the forecast result.
+     * @return
+     */
     public double[] forecastClosePrice(){
         double[] closePrice = forecast().get(0);
         return closePrice;
     }
     
+    /**
+     * Get the predicted test close price from the test result.
+     * @return
+     */
     public double[] forecastTestPrice() {
     	return forecastTest().get(0);
     }
     
+    /**
+     * Get the historical price data for the comparing showing in lineChart.
+     * @return
+     */
     public double[] gethistoricalClosePrice(){
     	return priceData;
     }

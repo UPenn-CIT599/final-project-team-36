@@ -1,9 +1,13 @@
 
-
 import com.workday.insights.timeseries.arima.*;
 import com.workday.insights.timeseries.arima.struct.*;
 import java.util.ArrayList;
 
+/**
+ * Run ARIMA model, and get the result.
+ * @author Dongchao Xu
+ *
+ */
 public class ArimaForecaster {
     
     private double[] dataArray;
@@ -17,8 +21,12 @@ public class ArimaForecaster {
     private int forecastSize;
     
     /**
-     * Prepare input timeseries data.
-     * Set ARIMA model parameters.
+     * Set ARIMA model parameters. All parameters are tuned with test data.
+     * @param dataArray
+     * @param p
+     * @param d
+     * @param q
+     * @param forecastSize
      */
     public ArimaForecaster(double[] dataArray, int p, int d, int q, int forecastSize){
         this.dataArray = dataArray;
@@ -33,25 +41,23 @@ public class ArimaForecaster {
     }
 
     /**
-     * Obtain forecast result. The structure contains forecasted values and performance metric etc.
+     * Obtain forecast result. 
+     * Result contains forecasted close price values and performance metric etc.
      * Read forecast values, We can obtain upper- and lower-bounds of confidence intervals on forecast values. By default, it computes at 95%-confidence level.
-     * The root mean-square error and the maximum normalized variance of the forecast values and their confidence interval are provided.
-     * The output information are build with StringBuilder
+     * The root mean-square error and the maximum normalized variance of the forecast values are provided.
+     * The output information are in the ArrayList<double[]> for the usage of prediction.
+     * @return
      */
     public ArrayList<double[]> forecast(){
-
         ArimaParams params = new ArimaParams(p, d, q, P, D, Q, m);
-
         ForecastResult forecastResult = Arima.forecast_arima(dataArray, forecastSize, params);
-
         double[] forecastData = forecastResult.getForecast();
         double[] uppers = forecastResult.getForecastUpperConf();
         double[] lowers = forecastResult.getForecastLowerConf();
         double rmse = forecastResult.getRMSE();
         double maxNormalizedVariance = forecastResult.getMaxNormalizedVariance();
-        //String log = forecastResult.getLog();
-
         ArrayList<double[]> result = new ArrayList<>();
+        
         result.add(forecastData);
         result.add(uppers);
         result.add(lowers);
