@@ -10,17 +10,21 @@ public class StockView {
     public StockView(String stock) {
         this.stock = stock;
     }
+    public StockView() {
+    }
 
-    double testnumber = 27.8;
+    //YahooController controller = new YahooController();
+    //List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(stock, 90);
+    //testnumber = 
+    //double testnumber = Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString());;
     
     
-
+    /*
     public double getTestnumber(int index) {
-        YahooController controller = new YahooController();
-        List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(stock, 90);
-        testnumber = Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString());
+        
         return testnumber;
     }
+    */
 
     private static DecimalFormat rounded = new DecimalFormat("0.00");
 
@@ -31,7 +35,8 @@ public class StockView {
      * @param whichStock
      */
     public void displayStockView(String whichStock) {
-        System.out.println("Current Stock: " + whichStock);
+        
+        //System.out.println(testnumber);
         double currentPrice = 0;
         double ninetyDayPrice = 1000;
         double oneEightyPrice = 0;
@@ -40,7 +45,7 @@ public class StockView {
         YahooController controller = new YahooController();
         List<Stock> listOfRealTimeData = controller.fetchRealTimeData(whichStock);
         for(Stock stock : listOfRealTimeData) {
-            System.out.println(stock.getQuote().toString());
+            //System.out.println(stock.getQuote().toString());
             currentPrice = stock.getQuote().getPreviousClose().doubleValue();
             //ninetyDayPrice = Double.parseDouble(controller.historicalStockDayWise(whichStock, 90).toString());
         }
@@ -54,11 +59,13 @@ public class StockView {
             oneEightyPrice = Double.parseDouble(manageRecordTransactionBean.getClose().toString());
         }
         */
-        List<ManageRecordTransactionBean> listOfHistoricalData = controller.historicalStock(whichStock,1);
-        threeSixtyFivePrice = Double.parseDouble(listOfHistoricalData.get(0).getClose().toString());
+        List<ManageRecordTransactionBean> listOfHistoricalDataDaywise2 = controller.historicalStockDayWise(whichStock, 365);
+        threeSixtyFivePrice = Double.parseDouble(listOfHistoricalDataDaywise2.get(0).getClose().toString());
+        //List<ManageRecordTransactionBean> listOfHistoricalData = controller.historicalStock(whichStock,1);
+         //= Double.parseDouble(listOfHistoricalData.get(0).getClose().toString());
         
         
-
+        System.out.println("Current Stock: " + whichStock);
         System.out.println("Last Close Price: " + currentPrice); // displayCurrentPrice(whichStock)); this method will need
                                                               // to be added with data class
         System.out.println(
@@ -94,11 +101,11 @@ public class StockView {
     public void displayUserActions(String whichStock) {
         System.out.println("Please enter the option on how you would like to proceed:");
         System.out.println("1: Choose an individual stock to view");
-        System.out.println("2: Show 90 day line chart");
+        System.out.println("2: Show 90 day line chart & Exit the program");
         System.out.println("3: Print out stock price daily history");
-        if (whichStock.equals("S&P 500")) {
-            System.out.println("4: View the price predictor for S&P 500");
-        }
+        //if (whichStock.equals("S&P 500")) {
+            System.out.println("4: View the price predictor for " + whichStock);
+        //}
         System.out.println("X: Exit the program");
     }
 
@@ -108,10 +115,10 @@ public class StockView {
      * stock ticker symbol
      */
     public void displayStockChoices() {
-        System.out.println("1: Apple (APPL)");
+        System.out.println("1: Apple (AAPL)");
         System.out.println("2: Google (GOOGL)");
         System.out.println("3: Microsoft (M)");
-        System.out.println("4: I want to choose a stock (please use ticker symbol - example: APPL)");
+        System.out.println("4: I want to choose a stock (please use ticker symbol - example: GE)");
         System.out.println("5: Back to S&P500");
         System.out.println("X: Exit Program");
     }

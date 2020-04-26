@@ -6,10 +6,10 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 public class PredictLineChart extends Application {
-
+	
 	@Override 
 	public void start(Stage stage) {
-        stage.setTitle("S&P 500 Price Predictor");
+        stage.setTitle("Stock Price Predictor");
         //defining the axes
         final NumberAxis xAxis = new NumberAxis();
         final NumberAxis yAxis = new NumberAxis();
@@ -17,13 +17,12 @@ public class PredictLineChart extends Application {
         //creating the chart
         final LineChart<Number,Number> lineChart = new LineChart<Number,Number>(xAxis,yAxis);
                 
-        lineChart.setTitle("S&P 500 Price Predictor");
+        lineChart.setTitle("Stock Price Predictor");
         //defining a series
         XYChart.Series seriesH = new XYChart.Series();
         seriesH.setName("Historical Stock Price (Last 30 Days)");
         //populating the series with data
         DataController dc = new DataController();
-        
         double[] historicalData = dc.gethistoricalClosePrice();
         for(int i = -29; i<= 0; i++) {
         	seriesH.getData().add(new XYChart.Data(i, historicalData[historicalData.length + i - 1]));
@@ -49,9 +48,9 @@ public class PredictLineChart extends Application {
         stage.setScene(scene);
         stage.show();
     }
-	
+
 	public void show() {
 		launch();
 	}
- 
+	
 }

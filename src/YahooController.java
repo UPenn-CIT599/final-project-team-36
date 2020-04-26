@@ -24,6 +24,7 @@ public class YahooController {
 		return st;
 	}
 	
+	
 
 public List<ManageRecordTransactionBean>  historicalStock(String stockName,int lastYear) {
 	

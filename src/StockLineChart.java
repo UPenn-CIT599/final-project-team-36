@@ -3,6 +3,7 @@ import java.util.List;
 import java.text.DecimalFormat;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -13,7 +14,7 @@ import yahoofinance.Stock;
 
 public class StockLineChart extends Application {
 
-    String stock = null;
+//    String stock = null;
     /*String stock = null;
     LocalDate date = LocalDate.now();
     LocalDate ninetyDate = date.minusDays(90);
@@ -21,9 +22,9 @@ public class StockLineChart extends Application {
     LocalDate oneYearDate = date.minusDays(365);
     */
     
-    public StockLineChart() {
-        
-    }
+//    public StockLineChart() {
+//        
+//    }
     
    @Override public void start(Stage stage) {
         stage.setTitle("90 Day Line Chart");
@@ -41,11 +42,14 @@ public class StockLineChart extends Application {
         XYChart.Series series = new XYChart.Series();
         series.setName("chart");
         //YahooController controller = new YahooController();
-        StockView sv = new StockView(stock);
+        //StockView sv = new StockView(stock);
         //List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(stock, 90);
         
-        for(int i = 90; i > 0; i--) {
-        series.getData().add(new XYChart.Data((91 - i), sv.getTestnumber(1)));
+        StockChartData stockData = new StockChartData();
+        double[] historicalData = stockData.getHistoricalData();
+        
+        for(int i = historicalData.length - 1; i >= 0; i--) {
+        	series.getData().add(new XYChart.Data((historicalData.length - i), historicalData[i]));
         }
         Scene scene = new Scene(lineChart,800,600);
         lineChart.getData().add(series);
@@ -54,14 +58,14 @@ public class StockLineChart extends Application {
         stage.show();
     }
     
-   public StockLineChart(String stock) {
-       this.stock = stock;
-   }
+//   public StockLineChart(String stock) {
+//       this.stock = stock;
+//   }
    
    //Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString()))
    
-    public static void main(String[] args) {
-        launch(args);
+    public void display() {
+        Platform.setImplicitExit(false);
+        launch();
     }
-    
 }

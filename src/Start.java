@@ -5,7 +5,7 @@ import yahoofinance.Stock;
 public class Start {
 	public static void main(String[] args) {
 		YahooController controller=new YahooController();
-		String symbol="GILD";
+		String symbol="";
 		System.out.println("#####################TRY TO GET REAL TIME DATA BY SINGLE SYMBOL############");
 		
 		List<Stock> listOfRealTimeData=controller.fetchRealTimeData(symbol);
