@@ -13,18 +13,6 @@ public class StockView {
     public StockView() {
     }
 
-    //YahooController controller = new YahooController();
-    //List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(stock, 90);
-    //testnumber = 
-    //double testnumber = Double.parseDouble(listOfHistoricalDataDaywise.get(0).getClose().toString());;
-    
-    
-    /*
-    public double getTestnumber(int index) {
-        
-        return testnumber;
-    }
-    */
 
     private static DecimalFormat rounded = new DecimalFormat("0.00");
 
@@ -36,18 +24,15 @@ public class StockView {
      */
     public void displayStockView(String whichStock) {
         
-        //System.out.println(testnumber);
         double currentPrice = 0;
-        double ninetyDayPrice = 1000;
+        double ninetyDayPrice = 0;
         double oneEightyPrice = 0;
         double threeSixtyFivePrice = 0;
         StockDataAnalysis analysis = new StockDataAnalysis();
         YahooController controller = new YahooController();
         List<Stock> listOfRealTimeData = controller.fetchRealTimeData(whichStock);
         for(Stock stock : listOfRealTimeData) {
-            //System.out.println(stock.getQuote().toString());
             currentPrice = stock.getQuote().getPreviousClose().doubleValue();
-            //ninetyDayPrice = Double.parseDouble(controller.historicalStockDayWise(whichStock, 90).toString());
         }
        
         List<ManageRecordTransactionBean> listOfHistoricalDataDaywise = controller.historicalStockDayWise(whichStock, 90);
@@ -55,14 +40,8 @@ public class StockView {
         
         List<ManageRecordTransactionBean> listOfHistoricalDataDaywise1 = controller.historicalStockDayWise(whichStock, 180);
         oneEightyPrice = Double.parseDouble(listOfHistoricalDataDaywise1.get(0).getClose().toString());
-        /*for (ManageRecordTransactionBean manageRecordTransactionBean : listOfHistoricalDataDaywise1) {
-            oneEightyPrice = Double.parseDouble(manageRecordTransactionBean.getClose().toString());
-        }
-        */
         List<ManageRecordTransactionBean> listOfHistoricalDataDaywise2 = controller.historicalStockDayWise(whichStock, 365);
         threeSixtyFivePrice = Double.parseDouble(listOfHistoricalDataDaywise2.get(0).getClose().toString());
-        //List<ManageRecordTransactionBean> listOfHistoricalData = controller.historicalStock(whichStock,1);
-         //= Double.parseDouble(listOfHistoricalData.get(0).getClose().toString());
         
         
         System.out.println("Current Stock: " + whichStock);
@@ -76,15 +55,15 @@ public class StockView {
         System.out.println(
                 "--------------------------------------------------------------------------------------------------");
         // System.out.println();
-        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 90 Days", ninetyDayPrice, currentPrice,
+        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 90 Days", rounded.format(ninetyDayPrice), currentPrice,
                 rounded.format(analysis.calculateDelta(currentPrice, ninetyDayPrice)),
                 rounded.format(analysis.calculatePerformance(currentPrice, ninetyDayPrice)) + "%");
         System.out.println();
-        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 180 Days", oneEightyPrice, currentPrice,
+        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 180 Days", rounded.format(oneEightyPrice), currentPrice,
                 rounded.format(analysis.calculateDelta(currentPrice, oneEightyPrice)),
                 rounded.format(analysis.calculatePerformance(currentPrice, oneEightyPrice)) + "%");
         System.out.println();
-        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 365 Days", threeSixtyFivePrice, currentPrice,
+        System.out.printf("%-20s %-20s %-20s %-10s %-20s", "Past 365 Days", rounded.format(threeSixtyFivePrice), currentPrice,
                 rounded.format(analysis.calculateDelta(currentPrice, threeSixtyFivePrice)),
                 rounded.format(analysis.calculatePerformance(currentPrice, threeSixtyFivePrice)) + "%");
         System.out.println();
@@ -117,7 +96,7 @@ public class StockView {
     public void displayStockChoices() {
         System.out.println("1: Apple (AAPL)");
         System.out.println("2: Google (GOOGL)");
-        System.out.println("3: Microsoft (M)");
+        System.out.println("3: Microsoft (MSFT)");
         System.out.println("4: I want to choose a stock (please use ticker symbol - example: GE)");
         System.out.println("5: Back to S&P500");
         System.out.println("X: Exit Program");

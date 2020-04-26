@@ -165,21 +165,14 @@ public class ProgramDashboard {
     }
 
     
-    
+    /**
+     * Method returns the stock as a string
+     * @return
+     */
     public String getStock() {
         return stock;
     }
 
-    /**
-     * This method checks whether user entered an integer
-     * 
-     * @param userInput
-     */
-    /*
-     * void checkInt(String userInput) { while (!userInput.par) {
-     * System.out.println("Input is not a number, try again"); userInput.nextLine();
-     * } }
-     */
     /**
      * This method will check if user enters exit command and exit the program
      * 
