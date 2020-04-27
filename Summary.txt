@@ -14,7 +14,7 @@ Work Breakdown:
 Anna An – Create the data structure to ingest the data and ability to add recent data to the set. Partner will also write backend functions for stock visual; 
 Chase Huckestein – Front end focused. Create the program visual functions for the user to launch, interact, and produce the program results in a friendly manner to the user;
 
-DongChao Xu– Machine learning model train and test. Focus on creating and training ML price predictor for the stock program
+DongChao Xu– Machine learning model train and test. Focus on creating and training ML price predictor for the stock program and prediction visualization.
 
 
 Link for Git repository:

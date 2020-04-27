@@ -154,6 +154,9 @@ class JunitTest {
       assertEquals(expectedOutput, outContent.toString());
     }
     
+    /**
+     * Check prediction of Arima model with Fibonacci sequence. The next number should be 233.
+     */
     @Test
     public void getFibonacciPrediction() {
         double[] data = new double[]{0,1,1,2,3,5,8,13,21,34,55,89,144};
@@ -161,6 +164,9 @@ class JunitTest {
         assertEquals(233, testResult.forecast().get(0)[0], 0.1, "Prediction of Fibonacci Error!");
     }
     
+    /**
+     * Double check prediction with more square sequence. 
+     */
     @Test
     public void getSquarePrediction() {
         double[] data = new double[]{0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196};
@@ -168,6 +174,9 @@ class JunitTest {
         assertEquals(225, testResult.forecast().get(0)[0], 0.1,"Prediction of Square Sequence Erro!");
     }
     
+    /**
+     * Check the prediction results, with the predict data, lower bound and upper bound.
+     */
     @Test
     public void getStockPredictionBoudary() {
     	DataController dc = new DataController("^GSPC");
@@ -177,15 +186,20 @@ class JunitTest {
     	assertTrue(forcastResult.forecast().get(0)[0] > forcastResult.forecast().get(2)[0], "Result Lower Than Lower Bound.");
     }
     
-    
+    /**
+     * Check the obtained real time data of last day. The price will vary everyday, so you need to input the correct real time price.
+     */
     @Test
     public void getLastDayPrice() {
     	DataController dc = new DataController("^GSPC");
     	double[] price = dc.gethistoricalClosePrice();
-    	double realTimePrice = 2836.74;
+    	double realTimePrice = 2878.48;
     	assertEquals(realTimePrice, price[price.length-1], 1.0, "Close Price Collection Error; May Cause by Daily Stock Update.");
     }
     
+    /**
+     * Check the size of the output close price array.
+     */
     @Test
     public void getPriceDataSize() {
     	DataController dc = new DataController("GOOGL");
@@ -193,6 +207,9 @@ class JunitTest {
     	assertEquals(689, price.length, "Close Price Collection Error");
     }
     
+    /**
+     * Check the predicted data size.
+     */
     @Test
     public void getForecastSize() {
     	DataController dc = new DataController("GOOGL");
@@ -202,6 +219,9 @@ class JunitTest {
     	assertEquals(7, forecastTest.length, "Predicted Close Price Collection Error");
     }
 
+    /**
+     * Check the output information to show detials about prediction.
+     */
     @Test
     public void getResultInformation() {
     	DataController dc = new DataController("GOOGL");
