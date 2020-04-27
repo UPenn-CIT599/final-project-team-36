@@ -15,7 +15,7 @@ public class ProgramDashboard {
     StockView summary = new StockView();
     public int chartOpened = 0;
 
-    public String stock = "AAPL";
+    public String stock = "^GSPC";
     StockLineChart chart = new StockLineChart(stock);
 
     /**

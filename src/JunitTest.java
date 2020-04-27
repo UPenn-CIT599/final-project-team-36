@@ -81,12 +81,12 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayUserActions("AAPL", 0);
-      String expectedOutput = "Please enter the option on how you would like to proceed:\n" + 
-              "1: Choose an individual stock to view\n" + 
-              "2: Show Stock line chart\n" + 
-              "3: Print out stock price daily history\n" + 
-              "4: View the price predictor for AAPL\n" + 
-              "X: Exit the program\n" +
+      String expectedOutput = "Please enter the option on how you would like to proceed:\r\n" + 
+              "1: Choose an individual stock to view\r\n" + 
+              "2: Show Stock line chart\r\n" + 
+              "3: Print out stock price daily history\r\n" + 
+              "4: View the price predictor for AAPL\r\n" + 
+              "X: Exit the program\r\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -102,13 +102,13 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayUserActions("AAPL", 1); //this changes to 1 signifying chart has been launched
-      String expectedOutput = "Please enter the option on how you would like to proceed:\n" + 
-              "1: Choose an individual stock to view\n" + 
-              "2: Show Stock line chart\n" + 
-              "3: Print out stock price daily history\n" + 
-              "4: View the price predictor for AAPL\n" + 
-              "X: Exit the program\n" +
-              "NOTE: If you exit the chart the program will terminate\n" +
+      String expectedOutput = "Please enter the option on how you would like to proceed:\r\n" + 
+              "1: Choose an individual stock to view\r\n" + 
+              "2: Show Stock line chart\r\n" + 
+              "3: Print out stock price daily history\r\n" + 
+              "4: View the price predictor for AAPL\r\n" + 
+              "X: Exit the program\r\n" +
+              "NOTE: If you exit the chart the program will terminate\r\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -123,12 +123,12 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       PD.summary.displayStockChoices();
-      String expectedOutput = "1: Apple (AAPL)\n" + 
-              "2: Google (GOOGL)\n" + 
-              "3: Microsoft (MSFT)\n" + 
-              "4: I want to choose a stock (please use ticker symbol - example: GE)\n" + 
-              "5: Back to S&P500\n" + 
-              "X: Exit Program\n" +
+      String expectedOutput = "1: Apple (AAPL)\r\n" + 
+              "2: Google (GOOGL)\r\n" + 
+              "3: Microsoft (MSFT)\r\n" + 
+              "4: I want to choose a stock (please use ticker symbol - example: GE)\r\n" + 
+              "5: Back to S&P500\r\n" + 
+              "X: Exit Program\r\n" +
               "";
       assertEquals(expectedOutput, outContent.toString());
     }
@@ -143,14 +143,14 @@ class JunitTest {
       ByteArrayOutputStream outContent = new ByteArrayOutputStream();
       System.setOut(new PrintStream(outContent));
       ProgramDashboard PD = new ProgramDashboard();
-      String expectedOutput = "Welcome to Team 36 Stock Market Program\n" + 
-              "\n" + 
-              "We have many excellent features in this program that we hope that you will enjoy, including:\n" + 
-              "    -Connection to the YahooFinance API so you enjoy the most up to date price information\n" + 
-              "    -A machine learning price prediction algorithm for the selected stock\n" + 
-              "    -Default price performance summary information\n" + 
-              "    -Stock 3 years performance line chart\n" + 
-              "\n";
+      String expectedOutput = "Welcome to Team 36 Stock Market Program\r\n" + 
+              "\r\n" + 
+              "We have many excellent features in this program that we hope that you will enjoy, including:\r\n" + 
+              "    -Connection to the YahooFinance API so you enjoy the most up to date price information\r\n" + 
+              "    -A machine learning price prediction algorithm for the selected stock\r\n" + 
+              "    -Default price performance summary information\r\n" + 
+              "    -Stock 3 years performance line chart\r\n" + 
+              "\r\n";
       assertEquals(expectedOutput, outContent.toString());
     }
     
