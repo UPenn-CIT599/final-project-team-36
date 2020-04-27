@@ -15,7 +15,7 @@ public class ProgramDashboard {
     StockView summary = new StockView();
     public int chartOpened = 0;
 
-    public String stock = "^GSPC";
+    public String stock = "AAPL";
     StockLineChart chart = new StockLineChart(stock);
 
     /**
@@ -45,7 +45,7 @@ public class ProgramDashboard {
         Scanner userOption = new Scanner(System.in);
         YahooController controller = new YahooController();
 
-        String stock = "^GSPC";
+        String stock = "GSPC";
 
         for (int i = 0; i < 1000; i++) {
             System.out.println();
@@ -71,27 +71,24 @@ public class ProgramDashboard {
                     /*
                      * Hard-coding options but this will display the stocks that are in the dataset
                      */
-                    if (whichOption == 0) {
+                    /*if (whichOption == 0) {
                         summary.displayStockChoices();
                         whichOption++;
                     } else {
                         summary.displayUserActions(stock, chartOpened);
                     }
+                    */
 
                     String choice2 = userOption.nextLine();
                     checkExit(choice2);
-                    // checkInt(choice2);
-                    // choice2.toUpperCase()
                     if (choice2.equals("1")) {
                         System.out.println("Apple Stock View");
                         stock = "AAPL";
                     } else if (choice2.equals("2")) {
-                        summary.displayStockView("GOOGL");
                         System.out.println("Google Stock View");
                         stock = "GOOGL";
 
                     } else if (choice2.equals("3")) {
-                        summary.displayStockView("MSFT");
                         System.out.println("Microsoft Stock View");
                         stock = "MSFT";
                     } else if (choice2.equals("4")) {
@@ -104,9 +101,9 @@ public class ProgramDashboard {
                         }
 
                     } else if (choice2.equals("5")) {
-                        //
                         System.out.println("Return to summary");
-                        stock = "^GSPC";
+                        stock = "\\^" + "GSPC";
+                        summary.displayStockView("^GSPC");
                     } else {
                         System.out.println("Invalid response - please try again");
                         choice2 = userOption.next();
