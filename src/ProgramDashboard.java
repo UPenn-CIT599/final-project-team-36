@@ -45,7 +45,7 @@ public class ProgramDashboard {
         Scanner userOption = new Scanner(System.in);
         YahooController controller = new YahooController();
 
-        String stock = "GSPC";
+        String stock = "^GSPC";
 
         for (int i = 0; i < 1000; i++) {
             System.out.println();
@@ -59,26 +59,13 @@ public class ProgramDashboard {
             summary.displayUserActions(stock, chartOpened);
             String choice1 = userOption.nextLine();
             checkExit(choice1);
-            int whichOption = 0;
 
             if (choice1.equals("1")) {
                 // Scanner stockPick = new Scanner(System.in);
                 for (int j = 0; j < 1; j++) {
 
                     System.out.println("Which Stock would you like to view?");
-                    // call display method for the list of available stocks
-                    // displayStockList();
-                    /*
-                     * Hard-coding options but this will display the stocks that are in the dataset
-                     */
-                    /*if (whichOption == 0) {
-                        summary.displayStockChoices();
-                        whichOption++;
-                    } else {
-                        summary.displayUserActions(stock, chartOpened);
-                    }
-                    */
-
+                    summary.displayStockChoices();
                     String choice2 = userOption.nextLine();
                     checkExit(choice2);
                     if (choice2.equals("1")) {
@@ -102,8 +89,8 @@ public class ProgramDashboard {
 
                     } else if (choice2.equals("5")) {
                         System.out.println("Return to summary");
-                        stock = "\\^" + "GSPC";
-                        summary.displayStockView("^GSPC");
+                        stock = "^GSPC";
+                        //summary.displayStockView("^GSPC");
                     } else {
                         System.out.println("Invalid response - please try again");
                         choice2 = userOption.next();
