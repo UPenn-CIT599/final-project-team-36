@@ -1,0 +1,22 @@
+Project Stock Market Analysis and Predict —Team 36
+
+Purpose:
+Provide one stop service for stock price real-time, history performance, with a  7 days price prediction to help customer make sound buy/sell decision.
+
+Description:
+
+	⁃	Connect to YahooFinance API to get the most up to date stock price as well as historical data;
+	⁃	Use a Machine learning price algorithm for 7 days prediction of S&P500;
+	⁃	Show stock price performance summary information when you enter a specific stock name;
+	⁃	Display 3 year stock price performance line chart
+
+Work Breakdown:
+Anna An – Create the data structure to ingest the data and ability to add recent data to the set. Partner will also write backend functions for stock visual; 
+Chase Huckestein – Front end focused. Create the program visual functions for the user to launch, interact, and produce the program results in a friendly manner to the user;
+
+DongChao Xu– Machine learning model train and test. Focus on creating and training ML price predictor for the stock program
+
+
+Link for Git repository:
+
+https://github.com/UPenn-CIT599/final-project-team-36
