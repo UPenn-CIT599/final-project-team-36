@@ -1,7 +1,7 @@
 Project Stock Market Analysis and Predict —Team 36
 
 Purpose:
-Provide one stop service for stock price real-time, history performance, with a  7 days price prediction to help customer make sound buy/sell decision.
+Provide one stop service for stock real-time, historical price performance, with a 7-days price prediction to help customer make sound buy/sell decisions.
 
 Description:
 
@@ -11,7 +11,9 @@ Description:
 	⁃	Display 3 year stock price performance line chart
 
 Work Breakdown:
-Anna An – Create the data structure to ingest the data and ability to add recent data to the set. Partner will also write backend functions for stock visual; 
+
+Anna An – Create the data structure to ingest the data and ability to add recent data to the set. Partner will also write backend functions for stock visual;
+
 Chase Huckestein – Front end focused. Create the program visual functions for the user to launch, interact, and produce the program results in a friendly manner to the user;
 
 DongChao Xu– Machine learning model train and test. Focus on creating and training ML price predictor for the stock program and prediction visualization.
