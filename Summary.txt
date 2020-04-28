@@ -9,7 +9,11 @@ Description:
 	⁃	Connect to YahooFinance API to get the most up to date stock price as well as historical data;
 	⁃	Use a Machine learning price algorithm for 7 days prediction of S&P500;
 	⁃	Show stock price performance summary information when you enter a specific stock name;
-	⁃	Display 3 year stock price performance line chart
+        ⁃	Display historical stock price performance line chart;
+	⁃	User can get the real-time & historical data as well as prediction by entering the symbol of 
+	        a specific stock
+	
+	
 
 Work Breakdown:
 
