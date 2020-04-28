@@ -1,7 +1,8 @@
 Project Stock Market Analysis and Predict —Team 36
 
 Purpose:
-Provide one stop service for stock real-time, historical price performance, with a 7-days price prediction to help customer make sound buy/sell decisions.
+Provide one stop service for stock real-time, historical price performance, with a 7-days price prediction to help 
+customer make sound buy/sell decisions.
 
 Description:
 
